@@ -1,0 +1,24 @@
+<div>
+  <h1>Docker constraint research</h1>
+  <hr>
+  <label>Types</label>
+  <select class="form-control" id="constraint-type" required>
+    <option *ngFor="let type of types" [value]="currentType">{{type}}</option>
+  </select>
+
+  <label>Configuration</label>
+  <select class="form-control" id="constraint-configuration" required>
+    <option *ngFor="let conf of configurations" [value]="configuration">{{conf.options}}</option>
+  </select>
+
+  <table>
+    <tr>
+      <th>Statistic type</th>
+      <th>Value</th>
+    </tr>
+    <tr *ngFor="let s of statistic">
+      <th>s.type</th>
+      <th>Value</th>
+    </tr>
+  </table>
+</div>
