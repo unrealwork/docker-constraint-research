@@ -31,13 +31,11 @@ export class AppComponent implements OnInit {
   };
 
 
-  constructor(private confServise: ConfigurationService, private widgetService: WidgetService, private statisticService: StatisticService) {
+  constructor(private confServise: ConfigurationService,
+              private widgetService: WidgetService,
+              private statisticService: StatisticService) {
   }
 
-
-  onChange(): void {
-    this.loadConfigurations();
-  }
 
   ngOnInit(): void {
     this.confServise.getTypes().subscribe(
@@ -45,7 +43,6 @@ export class AppComponent implements OnInit {
         this.types = types;
         this.currentType = types[0];
         this.loadConfigurations();
-
       }
     );
   }
@@ -71,7 +68,7 @@ export class AppComponent implements OnInit {
 
   private loadStatistic() {
     let period: Period = this.configuration.period;
-    this.statisticService.getStatistic(Metric.RESPONSE_TIME, period, StatisticType.AVG).subscribe(
+    this.statisticService.getStatistic(Metric.RESPONSE_TIME, period, StatisticType.ALL).subscribe(
       data => {
         console.log(data);
         this.statistic = {

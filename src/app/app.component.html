@@ -1,24 +1,46 @@
-<div>
-  <h1>Docker constraint research</h1>
-  <hr>
-  <label>Types</label>
-  <select class="form-control" id="constraint-type" required>
-    <option *ngFor="let type of types" [value]="currentType">{{type}}</option>
-  </select>
+<div class="container">
+  <!-- Header box -->
+  <div class="row">
+    <h1>Docker constraint research</h1>
+    <hr>
+  </div>
 
-  <label>Configuration</label>
-  <select class="form-control" id="constraint-configuration" required>
-    <option *ngFor="let conf of configurations" [value]="configuration">{{conf.options}}</option>
-  </select>
+  <!--Selection box -->
+  <div class="row">
+    <div class="col-md-3">
+      <label>Types</label>
+      <select class="form-control" placeholder="Constraint Type" id="constraint-type" [(ngModel)]="currentType">
+        <option *ngFor="let type of types" [ngValue]="type">{{type}}</option>
+      </select>
 
-  <table>
-    <tr>
-      <th>Statistic type</th>
-      <th>Value</th>
-    </tr>
-    <tr *ngFor="let s of statistic">
-      <th>s.type</th>
-      <th>Value</th>
-    </tr>
-  </table>
+    </div>
+    <div class="col-md-3 col-md-offset-6">
+      <label>Configuration</label>
+      <select class="form-control" id="constraint-configuration" (change)="onConfigurationChange()"
+              [(ngModel)]="configuration">
+        <option *ngFor="let conf of configurations" [ngValue]="conf">{{conf.options}}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Content box -->
+  <div class="row">
+    <div class="col-md-6">
+      <h3>MySQL Query Response Time</h3>
+      <table class="table">
+        <tr>
+          <th>Statistic type</th>
+          <th>Value</th>
+        </tr>
+        <tr *ngFor="let item of statistic.responseTime">
+          <td>
+            <strong>{{item.statistic}}</strong>
+          </td>
+          <td>
+            {{item.value}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>

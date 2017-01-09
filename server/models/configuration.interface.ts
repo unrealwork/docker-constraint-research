@@ -1,7 +1,7 @@
 import {Period} from './period.interface';
 
 export interface Configuration {
-  id: string;
+  options: string;
   type: string;
-  period: Period
+  period: Period;
 }

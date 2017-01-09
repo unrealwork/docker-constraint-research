@@ -1,5 +1,6 @@
 import {Router, Response, Request} from 'express';
 import * as _ from 'lodash';
+import {Configuration} from '../models/configuration.interface';
 
 const configurationRouter: Router = Router();
 const CONFIGURATION_ENTITY = 'stressed-configurations';
@@ -63,7 +64,7 @@ configurationRouter.get('/types/:configurationType/ids', (req: Request, res: Res
   }];
   properties.query(payload, function (error, response, body) {
     if (response.statusCode === 500) {
-      res.json({error: 'Failed to get property from connected ATSD'})
+      res.json({error: 'Failed to get property from connected ATSD'});
     } else {
       res.status(response.statusCode);
       if (response.statusCode === 200) {
@@ -120,7 +121,7 @@ configurationRouter.get('/types/:configurationType/ids/:id', (req: Request, res:
   });
 });
 
-function propertyToConfiguration(property) {
+function propertyToConfiguration(property: any): Configuration {
   return {
     type: property.type,
     options: property.tags.options,

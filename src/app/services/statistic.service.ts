@@ -6,7 +6,7 @@ import 'rxjs/add/operator/catch';
 import {Period} from '../models/period.interface';
 import {Metric} from '../models/metric.enum';
 import {StatisticType} from '../models/statistictype.enum';
-import {Statistic} from "../models/statitistic.interface";
+import {Statistic} from '../models/statitistic.interface';
 
 
 @Injectable()
@@ -19,12 +19,7 @@ export class StatisticService {
 
   getStatistic(metric: Metric, period: Period, type: StatisticType): Observable<Statistic> {
     return this.http.post(this.baseUrl + '/' + metric + '/' + type, period)
-      .map(data => {
-        return {
-          type: type,
-          value: data.json().value
-        };
-      })
+      .map(this.extractData)
       .catch(this.handleError);
   }
 

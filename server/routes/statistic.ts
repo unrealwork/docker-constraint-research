@@ -48,16 +48,15 @@ statisticRouter.post('/:name', (req: Request, res: Response) => {
         });
       } else {
         let result: any[] = [];
-        body.forEach(function (element) {
-          let s = element;
+        body.forEach((s: any) => {
           for (let tag in tagStatisticDictionary) {
             if (s.tags.id === tagStatisticDictionary[tag]) {
-              result.push(extractStatistic(series.data, tag));
+              result.push(extractStatistic(s.data, tag));
               break;
             }
           }
         });
-        res.json(body[0].data);
+        res.json(result);
       }
     });
   } else {
