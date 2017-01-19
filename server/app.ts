@@ -6,7 +6,8 @@ import * as compression from 'compression';
 
 import {configurationRouter} from './routes/configuration';
 import {statisticRouter} from './routes/statistic';
-import {widgetRouter} from './routes/widget'
+import {widgetRouter} from './routes/widget';
+import {ratesRouter} from './routes/rates';
 
 const app: express.Application = express();
 
@@ -20,6 +21,7 @@ app.use(urlencoded({extended: true}));
 app.use('/api/configuration', configurationRouter);
 app.use('/api/statistic', statisticRouter);
 app.use('/api/widget', widgetRouter);
+app.use('/api/rates', ratesRouter);
 
 if (app.get('env') === 'production') {
   // in production mode run application from dist folder

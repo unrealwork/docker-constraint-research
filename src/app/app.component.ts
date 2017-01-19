@@ -7,6 +7,7 @@ import {WidgetType} from  './models/widgettype.enum';
 import {StatisticService} from './services/statistic.service';
 import {StatisticType} from './models/statistictype.enum';
 import {Metric} from './models/metric.enum';
+import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
 
 
 declare function updateWidget(widget: any, element: any): void;

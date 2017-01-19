@@ -1,22 +1,22 @@
-<div class="container">
+<div>
   <!-- Header box -->
-  <div class="row">
+  <div>
     <h1>Docker constraint research</h1>
     <hr>
   </div>
 
   <!--Selection box -->
-  <div class="row">
-    <div class="col-md-3">
+  <div>
+    <div>
       <label>Types</label>
-      <select class="form-control" placeholder="Constraint Type" id="constraint-type" [(ngModel)]="currentType">
+      <select placeholder="Constraint Type" id="constraint-type" [(ngModel)]="currentType">
         <option *ngFor="let type of types" [ngValue]="type">{{type}}</option>
       </select>
 
     </div>
-    <div class="col-md-3 col-md-offset-6">
+    <div>
       <label>Configuration</label>
-      <select class="form-control" id="constraint-configuration" (change)="onConfigurationChange()"
+      <select id="constraint-configuration" (change)="onConfigurationChange()"
               [(ngModel)]="configuration">
         <option *ngFor="let conf of configurations" [ngValue]="conf">{{conf.options}}</option>
       </select>
@@ -24,26 +24,60 @@
   </div>
 
   <!-- Content box -->
-  <div class="row">
-    <h3>MySQL Query Response Time</h3>
-    <table class="table table-bordered table-hover table-striped">
-      <thead class="thead-default">
-      <tr>
-        <th *ngFor="let h of tableData.headers">{{h}}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of tableData.values">
-        <th scope="row">
-          {{row[0]}}
-        </th>
-        <ng-container *ngFor="let v of row; let i = index;">
-          <td *ngIf="i > 0">
-            {{v}}
-          </td>
-        </ng-container>
-      </tr>
-      </tbody>
-    </table>
+  <!--Overall Table-->
+  <div class="ui grid container">
+    <div class="row">
+      <div class="ui fluid segments">
+        <div class="ui segment">
+          <div class="title active">
+            <p>MySQL Query Response Time</p>
+          </div>
+        </div>
+        <div class="ui secondary segment">
+          <div class="ui fluid styled accordion ">
+            <div class="active title">
+              <i class="dropdown icon"></i>
+              Overall table
+            </div>
+            <div class="active content">
+              <table class="ui celled padded table">
+                <thead>
+                <tr>
+                  <th *ngFor="let h of tableData.headers">{{h}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let row of tableData.values">
+                  <th>
+                    {{row[0]}}
+                  </th>
+                  <ng-container *ngFor="let v of row; let i = index;">
+                    <td *ngIf="i > 0">
+                      {{v}}
+                    </td>
+                  </ng-container>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="title">
+              <i class="dropdown icon"></i>
+              Charts
+            </div>
+            <div class=" content">
+            </div>
+
+          </div>
+        </div>
+        <div class="ui segment">
+          <div class="title active">
+            <p>CPU Usage</p>
+          </div>
+        </div>
+        <div class="ui secondary segment">
+        </div>
+      </div>
+    </div>
   </div>
 </div>
