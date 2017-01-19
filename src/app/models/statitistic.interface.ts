@@ -1,6 +1,4 @@
-import {StatisticType} from './statistictype.enum';
-
 export interface Statistic {
-  type: StatisticType;
+  statistic: string;
   value: number;
 }

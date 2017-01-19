@@ -17,7 +17,7 @@ export class StatisticService {
   constructor(private http: Http) {
   }
 
-  getStatistic(metric: Metric, period: Period, type: StatisticType): Observable<Statistic> {
+  getStatistic(metric: Metric, period: Period, type: string): Observable<Statistic[]> {
     return this.http.post(this.baseUrl + '/' + metric + '/' + type, period)
       .map(this.extractData)
       .catch(this.handleError);

@@ -70,7 +70,7 @@ statisticRouter.post('/:name', (req: Request, res: Response) => {
 
 statisticRouter.post('/:name/:type', (req: Request, res: Response) => {
   let name: string = req.params.name;
-  let type: StatisticType = req.params.type;
+  let type: string = req.params.type;
   let period: Period = req.body;
 
 
