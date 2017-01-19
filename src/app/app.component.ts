@@ -3,12 +3,12 @@ import {Configuration} from './models/configuration.interface';
 import {ConfigurationService} from './services/configuration.service';
 import {WidgetService} from './services/widget.service';
 import {Period} from './models/period.interface';
-import {WidgetType} from  './models/widgettype.enum';
+import {WidgetType} from './models/widgettype.enum';
 import {StatisticService} from './services/statistic.service';
 import {StatisticType} from './models/statistictype.enum';
 import {Metric} from './models/metric.enum';
-import { Validators, FormControl, FormBuilder, FormGroup } from '@angular/forms';
-
+import {RateService} from './services/rate.serivice';
+import {Rate} from './models/rate.interface';
 
 declare function updateWidget(widget: any, element: any): void;
 
@@ -18,7 +18,8 @@ declare function updateWidget(widget: any, element: any): void;
   providers: [
     ConfigurationService,
     StatisticService,
-    WidgetService
+    WidgetService,
+    RateService
   ]
 })
 export class AppComponent implements OnInit {
@@ -26,7 +27,11 @@ export class AppComponent implements OnInit {
   public currentType: string = null;
   public types: string [] = null;
   public configuration: any = null;
-  public tableData: {headers: Array<string>; values: Array<string[]>} = {
+  public responseTableData: {headers: Array<string>; values: Array<string[]>} = {
+    headers: [],
+    values: []
+  };
+  public cpuUsageTableData: {headers: Array<string>; values: Array<string[]>} = {
     headers: [],
     values: []
   };
@@ -38,7 +43,8 @@ export class AppComponent implements OnInit {
 
   constructor(private confServise: ConfigurationService,
               private widgetService: WidgetService,
-              private statisticService: StatisticService) {
+              private statisticService: StatisticService,
+              private rateService: RateService) {
   }
 
 
@@ -78,11 +84,11 @@ export class AppComponent implements OnInit {
     };
 
     tableData.headers.push('Statistic type');
+    this.cpuUsageTableData.headers.push('Process');
     for (let conf of this.configurations) {
       tableData.headers.push(conf.options);
       this.statisticService.getStatistic(Metric.RESPONSE_TIME, conf.period, StatisticType.ALL).subscribe(
         data => {
-          console.log(data);
           if (tableData.values.length === 0) {
             for (let stat of data) {
               let row: string[] = [];
@@ -99,8 +105,25 @@ export class AppComponent implements OnInit {
           console.log(err);
         }
       );
+      this.cpuUsageTableData.headers.push(conf.options);
+      this.rateService.getStatistic('cpu-usage', conf.period).subscribe(
+        data => {
+          if (this.cpuUsageTableData.values.length === 0) {
+            for (let stat of data) {
+              let row: string[] = [];
+              row.push(stat.process);
+              this.cpuUsageTableData.values.push(row);
+            }
+          }
+          for (let stat of data) {
+            let row = this.getRowFromTableData(stat.process, this.cpuUsageTableData);
+            row.push(stat.value.toString());
+          }
+        }
+      );
+
     }
-    this.tableData = tableData;
+    this.responseTableData = tableData;
   }
 
   private getRowFromTableData(type: string, tableData: {headers: Array<string>; values: Array<string[]>}) {

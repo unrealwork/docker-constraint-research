@@ -43,11 +43,11 @@
               <table class="ui celled padded table">
                 <thead>
                 <tr>
-                  <th *ngFor="let h of tableData.headers">{{h}}</th>
+                  <th *ngFor="let h of responseTableData.headers">{{h}}</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let row of tableData.values">
+                <tr *ngFor="let row of responseTableData.values">
                   <th>
                     {{row[0]}}
                   </th>
@@ -76,6 +76,26 @@
           </div>
         </div>
         <div class="ui secondary segment">
+          <table class="ui celled padded table">
+            <thead>
+            <tr>
+              <th *ngFor="let h of cpuUsageTableData.headers">{{h}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let row of cpuUsageTableData.values">
+              <th>
+                {{row[0]}}
+              </th>
+              <ng-container *ngFor="let v of row; let i = index;">
+                <td *ngIf="i > 0">
+                  {{v}}
+                </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </table>
+
         </div>
       </div>
     </div>
