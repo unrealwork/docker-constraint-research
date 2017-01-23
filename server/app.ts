@@ -1,7 +1,6 @@
 import * as express from 'express';
 import {json, urlencoded} from 'body-parser';
 import * as path from 'path';
-import * as cors from 'cors';
 import * as compression from 'compression';
 
 import {configurationRouter} from './routes/configuration';
@@ -9,6 +8,8 @@ import {statisticRouter} from './routes/statistic';
 import {widgetRouter} from './routes/widget';
 import {ratesRouter} from './routes/rates';
 
+import {} from  './utils/client';
+let atsdClient = require('./utils/client');
 const app: express.Application = express();
 
 app.disable('x-powered-by');
@@ -17,11 +18,24 @@ app.use(json());
 app.use(compression());
 app.use(urlencoded({extended: true}));
 
+
+
+
+
 // api routes
 app.use('/api/configuration', configurationRouter);
 app.use('/api/statistic', statisticRouter);
 app.use('/api/widget', widgetRouter);
 app.use('/api/rates', ratesRouter);
+
+
+app.use('/api/v1', function (req, res) {
+  if (req.body == null) {
+    atsdClient.request(req.url, req.method).pipe(res);
+  } else {
+    atsdClient.request(req.url, req.method, req.body).pipe(res);
+  }
+});
 
 if (app.get('env') === 'production') {
   // in production mode run application from dist folder

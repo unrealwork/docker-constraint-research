@@ -8,7 +8,6 @@ import {StatisticService} from './services/statistic.service';
 import {StatisticType} from './models/statistictype.enum';
 import {Metric} from './models/metric.enum';
 import {RateService} from './services/rate.serivice';
-import {Rate} from './models/rate.interface';
 
 declare function updateWidget(widget: any, element: any): void;
 
@@ -64,6 +63,7 @@ export class AppComponent implements OnInit {
         console.log(configurations);
         this.configurations = configurations;
         this.configuration = configurations[0];
+        this.drawWidgets();
         this.loadStatistic();
       },
       err => {
@@ -73,7 +73,6 @@ export class AppComponent implements OnInit {
   }
 
   onConfigurationChange() {
-    // this.drawWidgets();
     this.loadStatistic();
   }
 
@@ -140,6 +139,7 @@ export class AppComponent implements OnInit {
     let period: Period = this.configuration.period;
     this.widgetService.getWidget(WidgetType.RESPONSE_TIME, period).subscribe(
       config => {
+        console.log(config);
         updateWidget(config, 0);
       },
       err => {

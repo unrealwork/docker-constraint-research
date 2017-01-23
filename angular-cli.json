@@ -21,7 +21,12 @@
         "../node_modules/normalize.css/normalize.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/charts/d3.min.js",
+        "assets/charts/portal_init.js",
+        "assets/charts/charts.min.js",
+        "assets/charts/initialize.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

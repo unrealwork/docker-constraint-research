@@ -13,7 +13,7 @@ let auth = 'Basic ' + new Buffer(options.user + ':' + options.password).toString
 module.exports = {
   httpClient: new atsdAPI.HttpClient(options),
   request: function (url, method, payload) {
-    let fullUrl = options.url + '/api' + url;
+    let fullUrl = options.url + '/api/v1' + url;
     console.log(fullUrl);
     let result = request({
       method: method,

@@ -1,12 +1,12 @@
 {
-  "name": "angular2-express-starter",
+  "name": "docker-constraint-research",
   "version": "1.0.0",
-  "description": "Starter application of Angular2 with Express",
+  "description": "Applcitation to demonstrate ",
   "main": "server/app.js",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
-    "start": "concurrently --kill-others \"ng serve --aot=true --proxy-config proxy.conf.json\" \"npm run _server:run\"",
+    "start": "concurrently --kill-others \"ng serve --host 0.0.0.0 --aot=true --proxy-config proxy.conf.json\" \"npm run _server:run\"",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test --watch=false",
     "pree2e": "webdriver-manager update",
@@ -16,7 +16,7 @@
     "_server:build": "tsc -p ./server",
     "postinstall": "npm run build"
   },
-  "author": "Vlado Tešanović",
+  "author": "Igor Shmagrinskiy",
   "repository": {
     "url": "https://github.com/vladotesanovic/angular2-express-starter"
   },
