@@ -1,7 +1,7 @@
 # Docker constraint research project
 
 
-![](docs/img/scheme.svg)
+![](docs/img/scheme.png)
 
 For  testing constraint we created two containers
 
