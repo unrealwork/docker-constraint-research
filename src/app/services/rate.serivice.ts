@@ -21,8 +21,14 @@ export class RateService {
       .catch(this.handleError);
   }
 
-  getStatistic(type: string, period: Period): Observable<Rate[]> {
-    return this.http.post(this.baseUrl + '/' + type, period)
+  getHostRate(type: string, period: Period): Observable<Rate[]> {
+    return this.http.post(this.baseUrl + '/' + type + '/host', period)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getPriorityRate(type: string, period: Period): Observable<Rate[]> {
+    return this.http.post(this.baseUrl + '/' + type + '/priority', period)
       .map(this.extractData)
       .catch(this.handleError);
   }

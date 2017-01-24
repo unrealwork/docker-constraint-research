@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import {Configuration} from '../models/configuration.interface';
 
 const configurationRouter: Router = Router();
-const CONFIGURATION_ENTITY = 'stressed-configurations';
+const CONFIGURATION_ENTITY = 'stressed-configurations-constraint';
 
 let properties = require('../utils/client').properties;
 let timeConstants = require('../utils/atsd-constants').time;

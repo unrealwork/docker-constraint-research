@@ -46,26 +46,26 @@ For researching constraint we will reproduce the following steps:
 
 ## Cpu constraints
 
-### --cpuset-cpus
+For each cpu constraints we will load CPU's cores by `--cpu` stress option. And then we try to decrease priority container response time by constraints.
 
+### Without constraint conditions
 
 #### Response time
 
-`*Constraint* : --cpu-set=[0,3]`
+##### Overall table without constraint mode
+
+| Statistic type | --cpu 0  | --cpu 1  | --cpu 2  | --cpu 3  | --cpu 4 | --cpu 5  | --cpu 6  | --cpu 7  | --cpu 8 | 
+|----------------|----------|----------|----------|----------|---------|----------|----------|----------|---------| 
+| min            | 1403     | 1461     | 1769     | 1887     | 1517    | 1496     | 1478     | 1486     | 1500    | 
+| max            | 1520     | 2408     | 2710     | 2818     | 2779    | 2594     | 2610     | 2760     | 2776    | 
+| avg            | 1465.38  | 1821.73  | 2264.13  | 2353.33  | 2209.5  | 1934.06  | 2122.25  | 2063.31  | 2083.81 | 
+| pct90          | 1520     | 2391.8   | 2709.4   | 2818     | 2779    | 2593.3   | 2600.9   | 2748.1   | 2776    | 
+| pct95          | 1520     | 2408     | 2710     | 2818     | 2779    | 2594     | 2610     | 2760     | 2776    | 
+| pct99          | 1520     | 2408     | 2710     | 2818     | 2779    | 2594     | 2610     | 2760     | 2776    | 
 
 
-###### Overall table without constraint mode
 
-| Statistic type | --cpu 0   | --cpu 1 | --cpu 2   | --cpu 3  | --cpu 4   | --cpu 5  | --cpu 6   | --cpu 7 | --cpu 8 |
-|----------------|-----------|---------|-----------|----------|-----------|----------|-----------|---------|---------|
-| min            | 1831      | 1602    | 1464      | 1647     | 2073      | 1516     | 1527      | 1495    | 1601    |
-| max            | 2209      | 1912    | 1900      | 2743     | 2237      | 2625     | 2607      | 2784    | 2753    |
-| avg            | 2140.3125 | 1756.25 | 1676.6875 | 2026.125 | 2179.3125 | 1994.125 | 2046.3125 | 2047.25 | 2062    |
-| pct90          | 2206.2    | 1907.8  | 1883.9    | 2714.3   | 2236.3    | 2613.8   | 2604.9    | 2713.3  | 2733.4  |
-| pct95          | 2209      | 1912    | 1900      | 2743     | 2237      | 2625     | 2607      | 2784    | 2753    |
-| pct99          | 2209      | 1912    | 1900      | 2743     | 2237      | 2625     | 2607      | 2784    | 2753    |
-
-
+#### Cpu usage by containers
 
 ##### Overall table in constraint mode
 
@@ -81,7 +81,6 @@ For researching constraint we will reproduce the following steps:
 
 
 ## CPU Usage by MySQL daemon
-
 
 ### Without constraint mode
 

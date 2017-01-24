@@ -106,7 +106,7 @@ function extractStatistic(samples: any, type: any): any {
   // return middle value
   return {
     statistic: type,
-    value: samples[~~(samples.length / 2)].v
+    value: Math.round(samples[~~(samples.length / 2)].v * 100) / 100
   };
 }
 

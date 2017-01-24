@@ -8,6 +8,7 @@ import {StatisticService} from './services/statistic.service';
 import {StatisticType} from './models/statistictype.enum';
 import {Metric} from './models/metric.enum';
 import {RateService} from './services/rate.serivice';
+import {Rate} from './models/rate.interface';
 
 declare function updateWidget(widget: any, element: any): void;
 
@@ -63,7 +64,6 @@ export class AppComponent implements OnInit {
         console.log(configurations);
         this.configurations = configurations;
         this.configuration = configurations[0];
-        this.drawWidgets();
         this.loadStatistic();
       },
       err => {
@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   onConfigurationChange() {
+    this.drawWidgets();
     this.loadStatistic();
   }
 
@@ -84,6 +85,16 @@ export class AppComponent implements OnInit {
 
     tableData.headers.push('Statistic type');
     this.cpuUsageTableData.headers.push('Process');
+    this.responseTableData = this.loadResponseOverallTable();
+    this.cpuUsageTableData = this.loadCpuUsageOverallTable();
+  }
+
+  private loadResponseOverallTable(): {headers: Array<string>; values: Array<string[]>} {
+    let tableData: {headers: Array<string>; values: Array<string[]>} = {
+      headers: [],
+      values: []
+    };
+    tableData.headers.push('Statistic Type');
     for (let conf of this.configurations) {
       tableData.headers.push(conf.options);
       this.statisticService.getStatistic(Metric.RESPONSE_TIME, conf.period, StatisticType.ALL).subscribe(
@@ -104,25 +115,36 @@ export class AppComponent implements OnInit {
           console.log(err);
         }
       );
-      this.cpuUsageTableData.headers.push(conf.options);
-      this.rateService.getStatistic('cpu-usage', conf.period).subscribe(
+    }
+    return tableData;
+  }
+
+  private loadCpuUsageOverallTable(): {headers: Array<string>; values: Array<string[]>} {
+    let tableData: {headers: Array<string>; values: Array<string[]>} = {
+      headers: [],
+      values: []
+    };
+    tableData.headers.push('Process');
+    for (let conf of this.configurations) {
+      tableData.headers.push(conf.options);
+      this.rateService.getHostRate('cpu-usage', conf.period).subscribe(
         data => {
-          if (this.cpuUsageTableData.values.length === 0) {
-            for (let stat of data) {
-              let row: string[] = [];
-              row.push(stat.process);
-              this.cpuUsageTableData.values.push(row);
-            }
-          }
-          for (let stat of data) {
-            let row = this.getRowFromTableData(stat.process, this.cpuUsageTableData);
-            row.push(stat.value.toString());
-          }
+          this.ratesToTable(tableData, data);
+        },
+        err => {
+          console.log(err);
         }
       );
-
+      this.rateService.getPriorityRate('cpu-usage', conf.period).subscribe(
+        data => {
+          this.ratesToTable(tableData, data);
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
-    this.responseTableData = tableData;
+    return tableData;
   }
 
   private getRowFromTableData(type: string, tableData: {headers: Array<string>; values: Array<string[]>}) {
@@ -133,6 +155,17 @@ export class AppComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  private ratesToTable(tableData: {headers: Array<string>; values: Array<string[]>}, data: Rate[]) {
+    for (let stat of data) {
+      let row = this.getRowFromTableData(stat.process, tableData);
+      if (row == null) {
+        row = [stat.process];
+        tableData.values.push(row);
+      }
+      row.push(stat.value.toString());
+    }
   }
 
   private drawWidgets() {
