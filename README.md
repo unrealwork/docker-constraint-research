@@ -106,4 +106,5 @@ More detail comparision can view in following chartlab portal
 
 ![](docs/img/portal-cpu-set.png)
 
-![](https://raw.githubusercontent.com/axibase/atsd-use-cases/master/ChartLabIntro/Images/button.png)
+![](http://apps.axibase.com/chartlab/e926d483/16/)
+
