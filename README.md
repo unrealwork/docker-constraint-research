@@ -20,12 +20,15 @@
 
 ### Testing tool
 
-   [Apache JMeter](http://jmeter.apache.org/). Jmeter uses to send SQL query to our priority container and collect 
+   [Apache JMeter](http://jmeter.apache.org/). JMeter uses to send SQL query to our priority container and collect 
     information about query response time and then send it to our ATSD instance.
+    
+    By default, Apache JMeter doesn't have time-based window backend listener, only count based,
+    for our purposes we implemented own [time-window-backend-listener](https://github.com/axibase/jmeter-time-window-backend-listener)
     
 ### Information about docker host
   
-  [Axibase collecor](https://github.com/axibase/axibase-collector-docs#axibase-collector) help us to collect information about docker host(such as cpu usage by container, host properties and others) by [remote connection](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#remote-collection).
+  [Axibase collecor](https://github.com/axibase/axibase-collector-docs#axibase-collector) help us to collect information about docker host(such as CPU usage by the container, host properties, and others) by [remote connection](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#remote-collection).
     
 ### Statistic storage
   Information about response time and docker host stored in instance of [Axibase Time Series Database](https://github.com/axibase/atsd-docs/blob/master/tutorials/getting-started.md)
@@ -40,13 +43,13 @@ For researching constraint we will reproduce the following steps:
 
   1. Enable loading of MySQL server by Apache Jmeter
   2. Create set of stressed configuration
-     We will run stressed container with different configuration and observe how it affects on mysql response time.
-  3. Then we repeat second step but all stressed configuration  will run with tested constraint.
+     We will run stressed container with different configuration and observe how it affects on MySQL response time.
+  3. Then we repeat the second step but all stressed configuration will run with tested constraint.
   4. Compare values of response time and characteristic that controlled by constraint.
 
 ## Cpu constraints
 
-For each cpu constraints we will load CPU's cores by `--cpu` stress option. And then we try to decrease priority container response time by constraints.
+For each CPU constraints, we will load CPU's cores by `--cpu` stress option. And then we try to decrease priority container response time by constraints.
 
 ### Without constraint conditions
 
@@ -64,8 +67,11 @@ For each cpu constraints we will load CPU's cores by `--cpu` stress option. And 
 | pct99          | 1520     | 2408     | 2710     | 2818     | 2779    | 2594     | 2610     | 2760     | 2776    | 
 
 
+#### `cpu-set` constraint
 
-#### Cpu usage by containers
+Now, we look how to change results when we run our stressed container with `--cpu-set="0,3"` constraint.
+
+##### Cpu usage by containers
 
 | Process | --cpu 0 | --cpu 1 | --cpu 2 | --cpu 3 | --cpu 4 | --cpu 5 | --cpu 6 | --cpu 7 | --cpu 8 |
 |---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
@@ -79,7 +85,7 @@ For each cpu constraints we will load CPU's cores by `--cpu` stress option. And 
 |----------------|---------|-----------|-----------|-----------|-----------|---------|-----------|-----------|----------|
 | min            | 1481    | 1486      | 1664      | 1540      | 2001      | 1730    | 1519      | 1572      | 1541     |
 | max            | 2506    | 1527      | 2751      | 2792      | 2394      | 2881    | 2227      | 2957      | 2839     |
-| avg            | 1855.5  | 1510.1875 | 2055.2856 | 2069.7144 | 2220.5715 | 2202.4  | 2011.3572 | 2184.9333 | 2072.077 |
+| avg            | 1855.5  | 1510.1875 | 2055.28   | 2069.71   | 2220.57   | 2202.4  | 2011.35   | 2184.93   | 2072.07  |
 | pct90          | 2339.4  | 1525.6    | 2657      | 2791      | 2359.5    | 2874.4  | 2224      | 2831      | 2809.8   |
 | pct95          | 2506    | 1527      | 2751      | 2792      | 2394      | 2881    | 2227      | 2957      | 2839     |
 | pct99          | 2506    | 1527      | 2751      | 2792      | 2394      | 2881    | 2227      | 2957      | 2839     |
@@ -87,7 +93,7 @@ For each cpu constraints we will load CPU's cores by `--cpu` stress option. And 
 
 
 
-### Cpu usage by containers
+##### Cpu usage by containers
 
 | Process | --cpu 0 | --cpu 1 | --cpu 2 | --cpu 3 | --cpu 4 | --cpu 5 | --cpu 6 | --cpu 7 | --cpu 8 |
 |---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
