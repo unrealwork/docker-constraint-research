@@ -23,8 +23,7 @@
    [Apache JMeter](http://jmeter.apache.org/). JMeter uses to send SQL query to our priority container and collect 
     information about query response time and then send it to our ATSD instance.
     
-    By default, Apache JMeter doesn't have time-based window backend listener, only count based,
-    for our purposes we implemented own [time-window-backend-listener](https://github.com/axibase/jmeter-time-window-backend-listener)
+By default, Apache JMeter doesn't have time-based window backend listener, only count based, for our purposes we implemented own [time-window-backend-listener](https://github.com/axibase/jmeter-time-window-backend-listener)
     
 ### Information about docker host
   
