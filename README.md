@@ -67,6 +67,12 @@ For each cpu constraints we will load CPU's cores by `--cpu` stress option. And 
 
 #### Cpu usage by containers
 
+| Process | --cpu 0 | --cpu 1 | --cpu 2 | --cpu 3 | --cpu 4 | --cpu 5 | --cpu 6 | --cpu 7 | --cpu 8 |
+|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
+| host    | 0.05    | 99.91   | 445.37  | 200.26  | 445     | 441.55  | 197.93  | 442.8   | 200     |
+| mysql   | 139.98  | 173.35  | 214.11  | 213.88  | 204.21  | 199.03  | 193.46  | 192.05  | 194.78  |
+
+
 ##### Overall table in constraint mode
 
 | Statistic type | --cpu 0 | --cpu 1   | --cpu 2   | --cpu 3   | --cpu 4   | --cpu 5 | --cpu 6   | --cpu 7   | --cpu 8  |
@@ -80,17 +86,18 @@ For each cpu constraints we will load CPU's cores by `--cpu` stress option. And 
 
 
 
-## CPU Usage by MySQL daemon
 
-### Without constraint mode
-
-| Process | --cpu 0 | --cpu 1 | --cpu 2 | --cpu 3 | --cpu 4 | --cpu 5 | --cpu 6 | --cpu 7 | --cpu 8 |
-|---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
-| mysql   | 169     | 155.8   | 171.467 | 197.8   | 171.6   | 183.267 | 181.933 | 181.533 | 193.867 |
-
-
-### Constraint mode
+### Cpu usage by containers
 
 | Process | --cpu 0 | --cpu 1 | --cpu 2 | --cpu 3 | --cpu 4 | --cpu 5 | --cpu 6 | --cpu 7 | --cpu 8 |
 |---------|---------|---------|---------|---------|---------|---------|---------|---------|---------|
-| mysql   | 146.733 | 181.533 | 184.8   | 219.6   | 210.8   | 218.133 | 221.2   | 208.4   | 208.533 |
+| host    | 0.05    | 99.91   | 445.37  | 200.26  | 445     | 441.55  | 197.93  | 442.8   | 200     |
+| mysql   | 139.98  | 173.35  | 214.11  | 213.88  | 204.21  | 199.03  | 193.46  | 192.05  | 194.78  |
+
+
+More detail comparision can view in following chartlab portal
+
+
+![](docs/img/portal-cpu-set.png)
+
+![](https://raw.githubusercontent.com/axibase/atsd-use-cases/master/ChartLabIntro/Images/button.png)

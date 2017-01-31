@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import {Configuration} from '../models/configuration.interface';
 
 const configurationRouter: Router = Router();
-const CONFIGURATION_ENTITY = 'stressed-configurations-constraint';
+const CONFIGURATION_ENTITY = 'stressed-configurations';
 
 let properties = require('../utils/client').properties;
 let timeConstants = require('../utils/atsd-constants').time;
@@ -58,6 +58,7 @@ configurationRouter.get('/types/:configurationType/ids', (req: Request, res: Res
   let type = req.params.configurationType;
   let payload = [{
     type: type,
+
     entity: CONFIGURATION_ENTITY,
     startDate: timeConstants.MIN_QUERIED_DATE,
     endDate: timeConstants.MAX_QUERIED_DATE
